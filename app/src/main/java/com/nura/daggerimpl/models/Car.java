@@ -1,10 +1,17 @@
 package com.nura.daggerimpl.models;
 
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
+
+@Singleton
 public class Car {
     String modelName;
 
-    public Car(String modelName) {
-        this.modelName = modelName;
+    @Inject
+    public Car() {
+        this.modelName = "Ford mustang";
     }
 
     public String getModelName() {

@@ -11,14 +11,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.nura.daggerimpl.dagger.AppModule;
-import com.nura.daggerimpl.models.Car;
+import com.nura.daggerimpl.dagger.DaggerUserComponent;
+import com.nura.daggerimpl.dagger.UserComponent;
 import com.nura.daggerimpl.models.User;
+
+import javax.inject.Inject;
+
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     Button btnShowDetails;
     TextView txtUserDetails;
+
+    @Inject
     User user;
 
     @Override
@@ -37,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initModelsData() {
-        AppModule appModule = ((MainApplication) getApplication()).appModule;
-        user = appModule.getUser();
+        UserComponent userComponent = DaggerUserComponent.builder().build();
+        userComponent.inject(this);
     }
 
 
