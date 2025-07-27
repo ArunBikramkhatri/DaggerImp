@@ -11,10 +11,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.nura.daggerimpl.dagger.DaggerUserComponent;
+import com.nura.daggerimpl.dagger.UserComponent;
+import com.nura.daggerimpl.models.User;
+
+import javax.inject.Inject;
+
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     Button btnShowDetails;
     TextView txtUserDetails;
+
+    @Inject
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,16 +36,23 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        initModelsData();
         initFields();
         initListeners();
     }
 
-    void initFields(){
+    private void initModelsData() {
+        UserComponent userComponent = DaggerUserComponent.builder().build();
+        userComponent.inject(this);
+    }
+
+
+    void initFields() {
         btnShowDetails = findViewById(R.id.btn_dagger_impl);
         txtUserDetails = findViewById(R.id.txt_user_details);
     }
 
-    void initListeners(){
+    void initListeners() {
         if (btnShowDetails == null) {
             Log.d(TAG, "initListeners : btnShowDetails is null");
             return;
@@ -44,8 +61,13 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "initListeners : txtUserDetails is null");
             return;
         }
+        if (user == null) {
+            Log.d(TAG, "initListeners : user is null");
+            return;
+        }
         btnShowDetails.setOnClickListener(v -> {
-
+            txtUserDetails.setText(user.toString());
         });
     }
+
 }

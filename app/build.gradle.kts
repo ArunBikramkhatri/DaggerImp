@@ -37,6 +37,11 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+
+    implementation("com.google.dagger:dagger:2.28.3")
+    implementation("com.google.dagger:dagger-android:2.28.3")
+    annotationProcessor("com.google.dagger:dagger-android-processor:2.28.3")
+    annotationProcessor("com.google.dagger:dagger-compiler:2.28.3")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
